@@ -23,13 +23,16 @@ app.set('view engine', 'ejs');
 // Get, POST etc
 
 app.get('/hello', helloCallBack);
-
+app.get('/searches/new', searchCallback);
 // Server Callbacks
 
 function helloCallBack(request, respond){
     respond.render('Pages/index')
 }
 
+function searchCallback(request, respond){
+    respond.render('Pages/searches/new');
+}
 //Listen
 app.listen(PORT, () => {
     console.log(`Listening to PORT ${PORT}`)
