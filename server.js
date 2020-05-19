@@ -87,7 +87,8 @@ const bookApiUrl = request.body.Author ? `https://www.googleapis.com/books/v1/vo
     respond.render('Pages/searches/shows', {'books': newBooks})
     }).catch(error =>{
         respond.render('Pages/errors', {'errors': error})
-        
+        respond.redirect('Pages/errors')
+
     })
     }
     
