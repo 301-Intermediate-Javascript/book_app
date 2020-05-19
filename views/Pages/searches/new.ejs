@@ -7,13 +7,16 @@
 </head>
 <body>
     <main>
-        <form action="/searches/new">
-            <fieldset>Search for Book by Author or Title</fieldset>
-            <label for="Author"></label>
-            <input type="text" name="Author">
-            <label for="Title"></label>
-            <input type="text" name="Title">
+        <form action="/searches" method="POST">
+            <fieldset>Search for Book by Author or Title
+            <label for="name">Author Name or Title Name</label><br>
+            <input type="text" name="name" placeholder="Author/Title">
+            <input type="radio" name="Author" value="Author">
+            <label for="Author">Author</label>
+            <input type="radio" name="Title" value="Title">
+            <label for="Title">Title</label><br>
             <input type="Submit">
+        </fieldset>
         </form>
     </main>
 </body>
