@@ -76,17 +76,18 @@ function searchCallback(request, respond){
 }
 
 function searchesCallBack(request, respond){
-console.log(request.body);
 const bookApiUrl = request.body.Author ? `https://www.googleapis.com/books/v1/volumes?q=inauthor:${request.body.name}` 
 :`https://www.googleapis.com/books/v1/volumes?q=intitle:${request.body.name}`;
     superAgent.get(bookApiUrl)
     .then(result =>{
-        console.log(result.body.items[0].volumeInfo)
        const newBooks = result.body.items.map(value =>{
         return new Book(value.volumeInfo);
     })
     console.log(newBooks);
     respond.render('Pages/searches/shows', {'books': newBooks})
+    }).catch(error =>{
+        respond.render('Pages/errors', {'errors': error})
+        
     })
     }
     
