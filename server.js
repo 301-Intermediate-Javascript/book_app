@@ -79,7 +79,14 @@ const bookApiUrl = request.body.Author ? `https://www.googleapis.com/books/v1/vo
     })
     }
 function booksCallBack(request, respond){
-console.log(request.body);
+console.log(request.params);
+const sqlQuery = `SELECT * FROM books WHERE id=$1`
+const sqlValue = [request.params.id];
+    client.query(sqlQuery, sqlValue)
+    .then(value => {
+        console.log(value.rows[0]);
+        respond.render('Pages/books/show', {'book' : value.rows[0]})
+    })
 }
 
 function books(request, respond) {
