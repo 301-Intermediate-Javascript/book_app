@@ -4,14 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <ul>
         <% books.forEach(value => { %>
-            <li><h2><%= value.title %></h2>
+
+            <li>
+                <img src=<%= value.image %> alt="">
+                <h2><%= value.title %></h2>
                 <h2><%= value.author %></h2>
                 <p><%= value.description %></p>
-                <img src=<%= value.image %> alt="">
+                <p><%= value.isbn %></p>
+                <form action="/books" method="POST">
+                <input class='save' type="text" name="image" placeholder="image" value="<%= value.image %>">
+                <input class='save' type="text" name="title" placeholder="title" value="<%= value.title %>">
+                <input class='save' type="text" name="author" placeholder="author" value="<%= value.author %>">
+                <input class='save' type="text" name="description" placeholder="description" value="<%= value.description %>">
+                <input class='save' type="text" name="isbn" placeholder="isbn" value="<%= value.isbn %>">
+                <input type="submit" value="Save this book?">
+                </form>
+                <br>
           <% }) %>
     </ul>
 </body>
