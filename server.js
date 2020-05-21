@@ -81,12 +81,11 @@ const bookApiUrl = request.body.Author ? `https://www.googleapis.com/books/v1/vo
     })
     }
 function booksCallBack(request, respond){
-console.log(request.params);
+// console.log(request.params);
 const sqlQuery = `SELECT * FROM books WHERE id=$1`
 const sqlValue = [request.params.id];
     client.query(sqlQuery, sqlValue)
     .then(value => {
-        console.log(value.rows[0]);
         respond.render('Pages/books/show', {'book' : value.rows[0], displayButton: true})
     }).catch(error =>{
         app.get('/errors', errors => {
@@ -99,9 +98,9 @@ const sqlValue = [request.params.id];
 
 function books(request, respond) {
     console.log(request.body);
-    const sqlQuery = 'INSERT INTO books (title, author, isbn, description, image) VALUES($1, $2, $3, $4, $5)';
+    const sqlQuery = 'INSERT INTO books (title, author, isbn, description, image, bookshelf) VALUES($1, $2, $3, $4, $5, $6)';
     const sqlValues = [request.body.title, request.body.author, request.body.isbn, request.body.description,
-    request.body.image];
+    request.body.image, 1];
     client.query(sqlQuery, sqlValues);
 
     respond.render('Pages/books/show', {'book': request.body, displayButton: false});
@@ -111,7 +110,6 @@ function homeCallBack(request, respond){
     const sqlQuery = 'SELECT * FROM books'
     client.query(sqlQuery)
     .then(value => {
-        console.log(value.rows);
         respond.render('Pages/index', {'collection' : value.rows})
     }).catch(error =>{
         app.get('/errors', errors => {
@@ -123,9 +121,9 @@ function homeCallBack(request, respond){
 }
 
 function updateCallback(request, respond){
-    console.log(request.body);
-    console.log(request.params);
-    const sql = `
+    // console.log(request.body);
+    // console.log(request.params);
+    let sql = `
     UPDATE books
     SET title=$1, description=$2, author=$3, image=$4, isbn=$5, bookshelf=$7
     WHERE id=$6
@@ -133,8 +131,13 @@ function updateCallback(request, respond){
     const values = [request.body.title, request.body.description, request.body.author, request.body.image, request.body.isbn, request.params.id, request.body.newBookShelf];
     client.query(sql, values)
     .then(() =>{
-        client.query()
-        respond.redirect(`/books/${request.params.id}`)
+        sql = `SELECT bookshelf FROM books WHERE id=${request.params.id}`;
+        client.query(sql)
+        .then(result =>{
+            console.log(result);
+            respond.redirect(`/books/${request.params.id}`)
+
+        })
     })
 }
 //Listen

@@ -10,5 +10,7 @@ $('document').ready(() => {
     form.toggle();
     })
 
-
 })
+$.get('/books/:id', renderOptions)
+
+
