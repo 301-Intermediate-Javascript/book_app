@@ -1,22 +1,34 @@
-<% if(displayButton) { %>
-    <button id="showForm">Update book in collection?</button>
-
+<% if(!displayButton) { %>
+    <button class="button" id="showForm">Update details</button>
+    <form action="/books/<%= book.id %>/delete?_overrideMethod=DELETE" method="POST" id="form2">
+        <button type="submit" class="button">Delete book</button>
+    </form>
     <% } %>
-<form action="/books/<%= book.id %>/update?_overrideMethod=PUT" method="POST" id="form">
-    <label for="newBookShelf">Make new Bookshelf</label>
-    <input type="number" name="newBookShelf">
-    <select name="currentBookShelf" id="bookShelf">
-    <option value="<%= book.bookshelf %>"><%= book.bookshelf %></option>
-</select>
-    <label for="title">Title</label>
-    <input type="text" name="title" value="<%= book.title %>" placeholder="Title">
-    <label for="author">Author</label>
-    <input type="text" name="author" value="<%= book.author %>" placeholder="Author">
-    <label for="isbn">ISBN</label>
-    <input type="text" name="isbn" value="<%= book.isbn %>" placeholder="ISBN">
-    <label for="image">Image URL</label>
-    <input type="text" name="image" value="<%= book.image %>" placeholder="Use a hperlink with HTTPS">
-    <label for="description">Description</label>
-    <input type="text" name="description" value="<%= book.description %>" placeholder="Please describe the book">
-    <input type="submit" value="Update">
-</form>
+    <ul id="form">
+        <li>
+
+            <form action="/books/<%= book.id %>/update?_overrideMethod=PUT" method="POST" >
+                <label for="newBookShelf">Make new Bookshelf</label>
+                <input type="number" name="newBookShelf"><br>
+                <label for="currentBookShelf">All Bookshelves in Database</label>
+                <select name="currentBookShelf" id="bookShelf">
+                    <option value="Book Shelf #"></option>
+                    <% shelf.forEach(bookShelf => { %>
+            
+                        <option value="<%= bookShelf.bookshelf %>"><%= bookShelf.bookshelf %></option>
+                    <% }) %>
+            </select><br>
+                <label for="title">Title</label>
+                <input type="text" name="title" value="<%= book.title %>" placeholder="Title"><br>
+                <label for="author">Author</label>
+                <input type="text" name="author" value="<%= book.author %>" placeholder="Author"><br>
+                <label for="isbn">ISBN</label>
+                <input type="text" name="isbn" value="<%= book.isbn %>" placeholder="ISBN"><br>
+                <label for="image">Image URL</label>
+                <input type="text" name="image" value="<%= book.image %>" placeholder="Use a hperlink with HTTPS"><br>
+                <label for="description">Description</label>
+                <input type="text" name="description" value="<%= book.description %>" placeholder="Please describe the book"><br>
+                <button type="submit" id="update" class="button">Update</button>
+            </form>
+        </li>
+    </ul>
