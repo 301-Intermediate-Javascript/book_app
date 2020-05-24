@@ -9,7 +9,7 @@
 
             <form action="/books/<%= book.id %>/update?_overrideMethod=PUT" method="POST" >
                 <label for="newBookShelf">Make new Bookshelf</label>
-                <input type="number" name="newBookShelf"><br>
+                <input type="text" name="newBookShelf" value="<%= shelf[0].bookshelf %>"><br>
                 <label for="currentBookShelf">All Bookshelves in Database</label>
                 <select name="currentBookShelf" id="bookShelf">
                     <option value="Book Shelf #"></option>
